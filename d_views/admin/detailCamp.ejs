@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Detail Campaign</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.7 -->
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="/bower_components/Ionicons/css/ionicons.min.css">
+  <!-- Google Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="/bower_components/Ionicons/css/ionicons.min.css">
+  <!-- Morris charts -->
+  <link rel="stylesheet" href="/bower_components/morris.js/morris.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/dist/css/AdminLTE.min.css">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="/dist/css/skins/_all-skins.min.css">
+  <!-- Google Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <!-- Import chart.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Import Morris -->
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+  <!-- Import Fusion Charts -->
+  <script src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
+  <script src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
+
+  <!-- import file js detailCamp.js  -->
+  <script src="/js/admin/detailCamp.js"></script>
+  <!-- import ajax shortlink va js  -->
+  <!-- <script src="/js/enter/ajaxShort.js"></script> -->
+  <!-- import ajax & js managercampaign -->
+  <script src="/js/enter/managerCampaign.js"></script>
+
+  <style>
+    #sticky {
+      text-align: center;
+      top: 0;
+      font-weight: bold;
+      color: white;
+      width: 100px;
+      height: 20px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-top: -3px;
+      background-color: #3c8dbc;
+      border: 2px solid #3c8dbc;
+      border-bottom-left-radius: 15px;
+      border-bottom-right-radius: 15px;
+    } 
+    #mybtn{
+      background: none;
+      border: none;
+    }
+    #mybtn:focus {
+      outline: 0 !important;
+    }
+    #detail{
+      padding-top:20px;
+      border-top: 1px solid #74c0ec;
+      width: 100%;
+      height:370px;
+      background-color: #3c8dbc;
+      display: none;
+    }
+
+    #oldUrlShortLink{
+      color: blue;
+      margin-left: -15px;
+      padding-right: 20px;
+    }
+    #newUrlShortLink{
+      color: blue;
+      height: 30px;
+      font-weight: bold;
+      font-style: italic;
+    }
+    .infoDetail:focus{
+    outline: none;
+    }
+    .infoDetail{
+      width: 100%; 
+      background: none;
+      border: none;
+      color: yellow;
+      border-bottom: 1px solid #74c0ec;
+      font-weight: bold;
+    }
+    .block{
+      margin-bottom: 15px;
+    }
+    .btn_list:focus{
+      outline: none;
+    }
+    .btn_list{
+      background: none;
+      color: #6595a7;
+      border: none;
+    }
+    .active, .btn_list:hover{
+      color:white;
+    }
+    div.block1{
+      background: transparent;
+      width: 100%;
+      height: 100px;
+      overflow-x: hidden;
+      overflow-y: scroll;
+    }
+</style>
+
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+  <div class="wrapper">
+
+
+    <header class="main-header">
+      <!-- Logo -->
+      <a href="/admin/manager" class="logo">
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini"><b>A</b>LT</span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg"><b>Shorten</b></span>
+      </a>
+      <!-- Header Navbar: style can be found in header.less -->
+      <nav class="navbar navbar-static-top">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+
+        <div class="navbar-custom-menu">
+          <ul class="nav navbar-nav">
+
+            <!-- User Account: style can be found in dropdown.less -->
+            <li class="dropdown user user-menu">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <img src="/admin.png" class="user-image" alt="User Image">
+                <span class="hidden-xs">ADMIN</span>
+              </a>
+              <ul class="dropdown-menu">
+                <!-- User image -->
+                <li class="user-header">
+                  <img src="/admin.png" class="img-circle" alt="User Image">
+
+                  <p>
+                    ADMIN
+                    <small>Member since Nov. 2012</small>
+                  </p>
+                </li>
+
+                <!-- Menu Footer-->
+                <li class="user-footer">
+                  <div class="pull-left">
+                    <a href="#" class="btn btn-default btn-flat"><b>Profile</b></a>
+                  </div>
+                  <div class="pull-right">
+                    <a href="/user/logout" class="btn btn-default btn-flat"> <b>Sign out</b> </a>
+                  </div>
+                </li>
+              </ul>
+            </li>
+
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+      <!-- sidebar: style can be found in sidebar.less -->
+      <section class="sidebar">
+        <!-- Sidebar user panel -->
+        <div class="user-panel">
+          <div class="pull-left image">
+            <img src="/admin.png" class="img-circle" alt="User Image">
+          </div>
+          <div class="pull-left info">
+            <p>ADMIN</p>
+            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+          </div>
+        </div>
+        <br>
+        <ul>
+          <li style="color : white; ">User name: ADMIN</li>
+          <li style="color : white; ">Email: admin@gmail.com</li>
+          <li style="color : white; ">Phone : 02413 884 999</li>
+          <li style="color : white; ">Address: Hà Nội - Việt Nam</li>
+        </ul>
+
+        <ul class="sidebar-menu" data-widget="tree">
+          <li class="treeview">
+            <a href="#">
+              <i class="fa fa-wrench"></i> <span>Tool</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="/admin/manager/user/1"><i class="fa fa-circle-o"></i> User Manager</a></li>
+              <li><a href="/admin/manager/campaign/1"><i class="fa fa-circle-o"></i> Campaign Manager</a></li>
+              <li><a href="/admin/manager/link/1"><i class="fa fa-circle-o"></i> Link Manager</a></li>
+              <li><a href="/admin/manager/user/1"><i class="fa fa-circle-o"></i> Export Accesslog</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="/admin/manager/campaign/export">
+              <i class="fa  fa-print"></i> <span>Export file excel</span>
+            </a>
+          </li>
+        </ul>
+
+      </section>
+      <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd -->
+      <div id="detail">
+        <div class="col-md-6">
+          <div class=block>
+            <label for="" style="color: white; ">Username:</label>
+            <input type="text" class="infoDetail" value="" readonly id="idUser">
+          </div>
+          <div class=block>
+            <label for="" style="color: white; ">Name Campaign:</label>
+            <input type="text" class="infoDetail" value="" readonly id="idname">
+          </div>
+          <div class="block">
+            <label for="" style="color: white;">Url Origin:</label>
+            <input type="text" class="infoDetail" value="" readonly id="idOldUrl">
+          </div>
+          <div class="block">
+            <label for="" style="color: white; width:20%">Time Create:</label>
+            <input type="text" class="infoDetail" value="" readonly id="create">
+          </div>
+          <div class="col-md-6">
+            <div class="block" style="margin-left: -14px">
+              <label for="" style="color: white; ">Start Time (mm/dd/yy):</label>
+              <input type="text" class="infoDetail" value="01/01/2018" readonly id="start">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="block">
+              <label for="" style="color: white;">End Time (mm/dd/yy):</label>
+              <input type="text" class="infoDetail" value="12/31/2018" readonly id="end">
+            </div>
+          </div>
+
+        </div>
+        <div class="col-md-6">
+          <div class="block">
+            <label for="" style="color: white; width:20%">Url Email:</label>
+            <input type="text" class="infoDetail" readonly value="" id="email">
+          </div>
+          <div class="block">
+            <label for="" style="color: white; width:20%">Url SMS:</label>
+            <input type="text" class="infoDetail" readonly value="" id="sms">
+          </div>
+          <div class="block">
+            <label for="" style="color: white; width:20%">Url Other:</label>
+            <input type="text" class="infoDetail" readonly value="" id="other">
+          </div>
+          <label for="" style="color: white">Url Facebook:</label> <br>
+          <% for (let x = 0; x < 1 ;  x++) { %>
+          <div class="block block1" id="block1">
+            <label for="" style="color: white; width:20%">1. Nhom1: </label>
+            <input type="text" class="infoDetail" readonly value="">
+          </div>
+
+          <% } %>
+
+        </div>
+      </div>
+      <div id="sticky"> <button id="mybtn"> <i id="fa" class="fa fa-angle-double-down"></i> More Info</button>
+      </div>
+
+
+
+      <!-- dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd -->
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <h1 customer="<%=JSON.stringify(customer)%>" id="idDetailCamp" style="font-weight:bold">
+          Detail Campaign
+          <small>infomation</small>
+        </h1>
+      </section>
+
+      <!-- Main content -->
+      <section class="content">
+        <!-- ******************************************************************8 -->
+        <!-- Main content -->
+        <section class="content">
+          <div class="row">
+            <!--Tong quan time click, detail timeclick-->
+            <div class="col-md-6">
+              <!-- Over view total click -->
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Over view total click</h3>
+
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body">
+                  <div class="chart tongquan">
+                    <canvas id="doughnut-chart-tongquan" height="40vh" width="100vw"></canvas>
+                  </div>
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+            </div>
+
+            <div class="col-md-6">
+              <!-- detail time click -->
+              <div class="box box-primary" style="height: 260px; font-size: 15px">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Detail infomation total click</h3>
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body">
+                  <div class="chart" style="color:#00090e;">
+                    <label for="" style="font-size: 20px;padding-left:22px">Total:<span id="total"></span> click</label>
+                    <ol>
+                      <li>Facebook: <span id="totalF"></span> click</li>
+                      <li>Email:<span id="totalE"></span> click</li>
+                      <li>Sms: <span id="totalS"></span> click</li>
+                      <li>Other:<span id="totalO"></span> click</li>
+                    </ol>
+                  </div>
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+            </div>
+            <!-- end tong quan time click -->
+
+            <!-- time date -->
+            <div class="col-md-12">
+              <!-- AREA CHART -->
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Average number of visits in a day</h3>
+
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body">
+                  <div class="chart averageMonth">
+                    <canvas id="bar-chart-grouped" height="90vh" width="300vw"></canvas>
+                  </div>
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+            </div>
+            <!-- end bieu do timedate -->
+
+
+            <!-- time click on grooup facebook -->
+            <div class="col-md-12">
+              <!-- AREA CHART -->
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Group facebook</h3>
+
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body">
+                  <div class="chart groupface">
+                    <canvas id="line-chart" height="90vh" width="300vw"></canvas>
+                  </div>
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+            </div>
+            <!-- end time click on grooup facebook -->
+
+
+
+            <!-- bieu do location -->
+            <div class="col-md-12">
+              <!-- AREA CHART -->
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Location</h3>
+
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body">
+                  <div class="chart location">
+                    <!-- <canvas id="location" height="90vh" width="300vw"></canvas> -->
+                    <div id="location"></div>
+                  </div>
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+            </div>
+            <!-- end bieu do location -->
+
+            <!-- Browser -->
+            <div class="col-md-6">
+              <!-- AREA CHART -->
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Browser</h3>
+
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body">
+                  <div class="chart browser">
+                    <canvas id="myBrowser" height="110vh" width="200vw"></canvas>
+                  </div>
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+            </div>
+            <!-- end Browser -->
+
+            <!-- Detail Browser -->
+            <div class="col-md-6">
+              <!-- AREA CHART -->
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Detail Browser</h3>
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body" style="height: 300px">
+                  <div class="chart" style="color:#00090e;">
+                    <label for="" style="font-size: 20px;padding-left:22px;">Total:<span id="totalBrowser"></span>
+                      browser</label>
+                    <ol style="font-size:15px; font-weight: 300">
+                      <li>Chrome: <span id="totalChrome"></span> unit </li>
+                      <li>IE:<span id="totalIE"></span> unit </li>
+                      <li>Opera: <span id="totalOpera"></span> unit </li>
+                      <li>Firefox:<span id="totalFire"></span> unit </li>
+                      <li>Safari:<span id="totalSafa"></span> unit</li>
+                      <li>CocCoc:<span id="totalCoc"></span> unit</li>
+                      <li>Facebook:<span id="totalFb"></span> unit </li>
+                      <li>Other:<span id="totalOth"></span> unit</li>
+                    </ol>
+                  </div>
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+            </div>
+            <!-- end detail browser -->
+
+            <!-- Device -->
+            <div class="col-md-6">
+              <!-- AREA CHART -->
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Device</h3>
+
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body device ">
+                  <div id="device" style="height: 250px;"></div>
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+            </div>
+            <!-- end Device -->
+
+            <!-- Detail Device -->
+            <div class="col-md-6">
+              <!-- AREA CHART -->
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Detail Device</h3>
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body" style="height: 270px">
+                  <div class="chart" style="color:#00090e;">
+                    <label for="" style="font-size: 20px;padding-left:22px;">Total:<span id="totalDevice"></span>
+                      device</label>
+                    <ol style="font-size:15px; font-weight: 300">
+                      <li>Desktop: <span id="totalDes"></span> device </li>
+                      <li>Phone:<span id="totalPhone"></span> device </li>
+                      <li>Tablet: <span id="totalTab"></span> device </li>
+                      <li>Other:<span id="totalOthDevice"></span> device </li>
+                    </ol>
+                  </div>
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+            </div>
+            <!-- end detail device -->
+
+            <!-- OS desktop -->
+            <div class="col-md-6">
+              <!-- AREA CHART -->
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">OS Desktop</h3>
+
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body osDesktop">
+                  <div id="osDesktop" style="height: 250px;"></div>
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+            </div>
+            <!--end os desktop -->
+
+
+            <!-- Detail osDesktop -->
+            <div class="col-md-6">
+              <!-- AREA CHART -->
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Detail OS Desktop</h3>
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body" style="height: 270px">
+                  <div class="chart" style="color:#00090e;">
+                    <label for="" style="font-size: 20px;padding-left:22px;">Total:<span id="totalOsDesk"></span> OS</label>
+                    <ol style="font-size:15px; font-weight: 300">
+                      <li>Windows: <span id="totalWin"></span> unit </li>
+                      <li>Mac OS:<span id="totalMac"></span> unit </li>
+                      <li>Linux: <span id="totalLinux"></span> unit </li>
+                      <li>Other:<span id="totalOthOsDesk"></span> unit </li>
+                    </ol>
+                  </div>
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+            </div>
+            <!-- end detail osdesktop -->
+
+            <!-- OS Phone & tablet -->
+            <div class="col-md-6">
+              <!-- AREA CHART -->
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">OS Phone, Tablet</h3>
+
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body osPhone">
+                  <div id="osPhone" style="height: 250px;"></div>
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+            </div>
+            <!-- end os phone & tablet -->
+
+            <!-- Detail Phone & Tablet -->
+            <div class="col-md-6">
+              <!-- AREA CHART -->
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Detail Phone & Tablet</h3>
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body" style="height: 270px">
+                  <div class="chart" style="color:#00090e;">
+                    <label for="" style="font-size: 20px;padding-left:22px;">Total:<span id="total0SPhone"></span> OS</label>
+                    <ol style="font-size:15px; font-weight: 300">
+                      <li>Android: <span id="totalAn"></span> unit </li>
+                      <li>iOs:<span id="totaliOS"></span> unit </li>
+                      <li>Other:<span id="totalOthPhone"></span> unit </li>
+                    </ol>
+                  </div>
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+            </div>
+            <!-- end detail os phone & tablet -->
+          </div>
+          <!-- /.row -->
+
+          <!-- *************************************************************************** -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+      <div class="pull-right hidden-xs">
+        <b>Version</b> 2.4.0
+      </div>
+      <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
+      reserved.
+    </footer>
+
+
+    <!-- /.control-sidebar -->
+    <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- jQuery 3 -->
+  <!-- <script src="/bower_components/jquery/dist/jquery.min.js"></script> -->
+  <!-- Bootstrap 3.3.7 -->
+  <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <!-- ChartJS -->
+
+  <!-- FastClick -->
+  <script src="/bower_components/fastclick/lib/fastclick.js"></script>
+  <!-- AdminLTE App -->
+  <script src="/dist/js/adminlte.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="/dist/js/demo.js"></script>
+  <!-- page script -->
+
+</body>
+
+</html>

@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>AdminLTE 2 | ChartJS</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.7 -->
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="/bower_components/Ionicons/css/ionicons.min.css">
+  <!-- Google Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="/bower_components/Ionicons/css/ionicons.min.css">
+  <!-- Morris charts -->
+  <link rel="stylesheet" href="/bower_components/morris.js/morris.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/dist/css/AdminLTE.min.css">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="/dist/css/skins/_all-skins.min.css">
+  <!-- Google Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <!-- Import chart.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Import Morris -->
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+  <!-- Import Fusion Charts -->
+  <script src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
+  <script src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
+
+
+
+  <!-- import slidereveal -->
+  <script src="/jquery.slidereveal.min.js"></script>
+  <!-- import ajax shortlink va js  -->
+  <script src="/js/enter/ajaxShort.js"></script>
+  <!-- import ajax & js managercampaign -->
+  <script src="/js/enter/managerCampaign.js"></script>
+
+
+  <style>
+    #sticky {
+      text-align: center;
+      top: 0;
+      font-weight: bold;
+      color: white;
+      width: 150px;
+      height: 20px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-top: -3px;
+      background-color: #3c8dbc;
+      border: 2px solid #3c8dbc;
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+    } 
+    #mybtn{
+      background: none;
+      border: none;
+    }
+    #mybtn:focus {
+      outline: 0 !important;
+    }
+    #detail{
+      padding-top:20px;
+      border-top: 1px solid #74c0ec;
+      width: 100%;
+      height:380px;
+      background-color: #3c8dbc;
+      display: none;
+    }
+    .slider{
+      height: 300px; 
+      background-color: #222d32; 
+      padding-top: 80px;
+      padding-left: 20px;
+      padding-right: 40px;
+    }
+    #oldUrlShortLink{
+      color: blue;
+      margin-left: -15px;
+      padding-right: 20px;
+    }
+    #newUrlShortLink{
+      color: blue;
+      height: 30px;
+      font-weight: bold;
+      font-style: italic;
+    }
+    #listCampaign{
+      border: 1px dotted black;
+      overflow: auto;
+      padding-left: 15px;
+    }
+
+    /* width */
+    #listCampaign::-webkit-scrollbar {
+        width:10px;
+        height: 1px;
+    }
+
+    /* Track */
+    #listCampaign::-webkit-scrollbar-track {
+        background: #2c3b41; 
+    }
+    
+    /* Handle */
+    #listCampaign::-webkit-scrollbar-thumb {
+        background: #888; 
+        border-radius: 5px;
+    }
+
+    /* Handle on hover */
+    #listCampaign::-webkit-scrollbar-thumb:hover {
+        background: #555; 
+    }
+    .infoDetail:focus{
+    outline: none;
+    }
+    .infoDetail{
+      width: 100%; 
+      background: none;
+      border: none;
+      color: yellow;
+      border-bottom: 1px solid #74c0ec;
+      font-weight: bold;
+    }
+    .block{
+      margin-bottom: 15px;
+    }
+    .btn_list:focus{
+      outline: none;
+    }
+    .btn_list{
+      background: none;
+      color: #6595a7;
+      border: none;
+    }
+    .active, .btn_list:hover{
+      color:white;
+    }
+    div.block1{
+      background: transparent;
+      width: 100%;
+      height: 100px;
+      overflow-x: hidden;
+      overflow-y: scroll;
+    }
+  
+   
+   
+</style>
+
+
+
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+  <div class="wrapper">
+
+
+    <header class="main-header">
+      <!-- Logo -->
+      <a href="../../index2.html" class="logo">
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini"><b>A</b>LT</span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg"><b>Admin</b>LTE</span>
+      </a>
+      <!-- Header Navbar: style can be found in header.less -->
+      <nav class="navbar navbar-static-top">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+
+        <div class="navbar-custom-menu">
+          <ul class="nav navbar-nav">
+            <!-- Create ShortLink & Campaign -->
+            <li>
+                <div class="dropdown" style="margin-top: 7px">
+                  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Create
+                    <span class="caret"></span></button>
+                  <ul class="dropdown-menu">
+                    <li><a href="#" id="btnShort"> <b>Short Link</b> </a></li>
+                    <li><a href="/enterprise/create" id="btnCampaign"> <b>Campaign</b> </a></li>
+                  </ul>
+                </div>
+              </li>
+
+            <!-- User Account: style can be found in dropdown.less -->
+            <li class="dropdown user user-menu">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <img src="/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                <span class="hidden-xs">.</span>
+              </a>
+              <ul class="dropdown-menu">
+                <!-- User image -->
+                <li class="user-header">
+                  <img src="/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+
+                  <p>
+                    Nguyễn Văn Tuấn
+                    <small>Member since Nov. 2012</small>
+                  </p>
+                </li>
+
+                <!-- Menu Footer-->
+                <li class="user-footer">
+                  <div class="pull-left">
+                    <a href="#" class="btn btn-default btn-flat"><b>Profile</b></a>
+                  </div>
+                  <div class="pull-right">
+                    <a href="/user/logout" class="btn btn-default btn-flat"> <b>Sign out</b> </a>
+                  </div>
+                </li>
+              </ul>
+            </li>
+            <!-- Create shortlink -->
+            
+            <!-- Control Sidebar Toggle Button -->
+            <li>
+              <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+            </li>
+
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+      <!-- sidebar: style can be found in sidebar.less -->
+      <section class="sidebar">
+        <!-- Sidebar user panel -->
+        <div class="user-panel">
+          <div class="pull-left image">
+            <img src="/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+          </div>
+          <div class="pull-left info">
+            <p>Nguyễn Văn Tuấn</p>
+            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+          </div>
+        </div>
+        <!-- search form -->
+        <form action="#" method="get" class="sidebar-form">
+          <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Search...">
+            <span class="input-group-btn">
+              <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+              </button>
+            </span>
+          </div>
+        </form>
+        <!-- /.search form -->
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu" data-widget="tree">
+          <li class="header" arrCampaign="<%= JSON.stringify(campaign) %>" id="arr_campaign">MAIN NAVIGATION</li>
+
+
+
+          <li class="treeview active">
+            <a href="#">
+              <i class="fa fa-pie-chart"></i>
+              <span>Campaign Manager</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <div id="listCampaign">
+                <% for (var i = 0; i < campaign.length ;  i++) { %>
+                <% if(i == 0) { %>
+                <li> <button class="btn_list active" id="id_list<%=i+1%>"><i class="fa fa-circle-o text-orange"></i>
+                    <%= campaign[i].name %></button></li>
+                <br>
+                <% } else { %>
+                <li> <button class="btn_list" id="id_list<%=i+1%>"><i class="fa fa-circle-o text-orange"></i>
+                    <%= campaign[i].name %></button></li>
+                <br>
+                <% } %>
+                <% } %>
+              </div>
+            </ul>
+          </li>
+
+          <li>
+            <a href="layout/calendar.html">
+              <i class="fa fa-calendar"></i> <span>Calendar</span>
+              <span class="pull-right-container">
+                <small class="label pull-right bg-red">3</small>
+                <small class="label pull-right bg-blue">17</small>
+              </span>
+            </a>
+          </li>
+
+
+          <li id="export" style="display : none">
+            <a href="/enterprise/export"><i class="fa fa-book"></i> <span>Export file excel</span></a>
+          </li>
+          <li class="header"> <b>SHORTEN LINK</b> </li>
+          <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>History</span></a></li>
+        </ul>
+      </section>
+      <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd -->
+      <div id="detail">
+        <div class="col-md-6">
+          <div class=block>
+            <label for="" style="color: white; width:20%">Name:</label>
+            <input type="text" class="infoDetail" value="Campaign Demo" readonly id="idname">
+          </div>
+          <div class="block">
+            <label for="" style="color: white; width:20%">Url Origin:</label>
+            <input type="text" class="infoDetail" value="Url Origin" readonly id="idOldUrl">
+          </div>
+          <div class="block">
+            <label for="" style="color: white; width:20%">Start Time:</label>
+            <input type="text" class="infoDetail" value="01/01/2018" readonly id="start">
+          </div>
+          <div class="block">
+            <label for="" style="color: white; width:20%">End Time:</label>
+            <input type="text" class="infoDetail" value="12/31/2018" readonly id="end">
+          </div>
+          <div class="block">
+            <label for="" style="color: white; width:20%">Time Create:</label>
+            <input type="text" class="infoDetail" value="01/01/2018" readonly id="create">
+          </div>
+
+        </div>
+        <div class="col-md-6">
+          <div class="block">
+            <label for="" style="color: white; width:20%">Url Email:</label>
+            <input type="text" class="infoDetail" readonly value="localhost:3000/email" id="email">
+          </div>
+          <div class="block">
+            <label for="" style="color: white; width:20%">Url SMS:</label>
+            <input type="text" class="infoDetail" readonly value="localhost:3000/sms" id="sms">
+          </div>
+          <div class="block">
+            <label for="" style="color: white; width:20%">Url Other:</label>
+            <input type="text" class="infoDetail" readonly value="localhost:3000/other" id="other">
+          </div>
+          <label for="" style="color: white">Url Facebook:</label> <br>
+          <% for (let x = 0; x < 1 ;  x++) { %>
+          <div class="block block1">
+            <label for="" style="color: white; width:20%">1. Nhom1: </label>
+            <input type="text" class="infoDetail" readonly value="localhost:3000/nhom1">
+          </div>
+
+          <% } %>
+
+        </div>
+      </div>
+      <div id="sticky"> <button id="mybtn"> <i id="fa" class="fa fa-angle-double-down"></i> Campaign detail</button>
+      </div>
+      <div id='slider' class="slider">
+        <label for="" style="color: white">PASTE LONG URL</label>
+        <br>
+        <div class="col-md-10"><textarea rows="3" cols="19" id="oldUrlShortLink"></textarea></div>
+        <div class="col-md-2"> <button style="height: 68px" class="btn btn-primary" id="btnGo">Go</button></div>
+        <br> <br><br> <br> <br>
+        <label for="" style="color: white">CUSTOMER SHORT LINK</label> <br>
+        <input type="text" id="newUrlShortLink" autocomplete="off"> <br> <br>
+        <button class="btn btn-primary" id="btnSave">Save</button>
+      </div>
+
+
+      <!-- dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd -->
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <h1>
+          Nguyen Van Tuan
+          <small>Preview sample</small>
+        </h1>
+      </section>
+
+      <!-- Main content -->
+      <section class="content">
+        <!-- ******************************************************************8 -->
+        <!-- Main content -->
+        <section class="content">
+          <div class="row">
+            <!--Tong quan time click, detail timeclick-->
+            <div class="col-md-6">
+              <!-- Over view total click -->
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Over view total click</h3>
+
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body">
+                  <div class="chart tongquan">
+                    <canvas id="doughnut-chart-tongquan" height="40vh" width="100vw"></canvas>
+                  </div>
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+            </div>
+
+            <div class="col-md-6">
+              <!-- detail time click -->
+              <div class="box box-primary" style="height: 260px; font-size: 15px">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Detail infomation total click</h3>
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body">
+                  <div class="chart" style="color:#00090e;">
+                    <label for="" style="font-size: 20px;padding-left:22px">Total:<span id="total"></span> click</label>
+                    <ol>
+                      <li>Facebook: <span id="totalF"></span> click</li>
+                      <li>Email:<span id="totalE"></span> click</li>
+                      <li>Sms: <span id="totalS"></span> click</li>
+                      <li>Other:<span id="totalO"></span> click</li>
+                    </ol>
+                  </div>
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+            </div>
+            <!-- end tong quan time click -->
+
+            <!-- time date -->
+            <div class="col-md-12">
+              <!-- AREA CHART -->
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Average number of visits in a day</h3>
+
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body">
+                  <div class="chart averageMonth">
+                    <canvas id="bar-chart-grouped" height="90vh" width="300vw"></canvas>
+                  </div>
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+            </div>
+            <!-- end bieu do timedate -->
+
+
+            <!-- time click on grooup facebook -->
+            <div class="col-md-12">
+              <!-- AREA CHART -->
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Group facebook</h3>
+
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body">
+                  <div class="chart groupface">
+                    <canvas id="line-chart" height="90vh" width="300vw"></canvas>
+                  </div>
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+            </div>
+            <!-- end time click on grooup facebook -->
+
+
+
+            <!-- bieu do location -->
+            <div class="col-md-12">
+              <!-- AREA CHART -->
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Location</h3>
+
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body">
+                  <div class="chart location">
+                    <!-- <canvas id="location" height="90vh" width="300vw"></canvas> -->
+                    <div id="location"></div>
+                  </div>
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+            </div>
+            <!-- end bieu do location -->
+
+            <!-- Browser -->
+            <div class="col-md-6">
+              <!-- AREA CHART -->
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Browser</h3>
+
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body">
+                  <div class="chart browser">
+                    <canvas id="myBrowser" height="110vh" width="200vw"></canvas>
+                  </div>
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+            </div>
+            <!-- end Browser -->
+
+            <!-- Detail Browser -->
+            <div class="col-md-6">
+              <!-- AREA CHART -->
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Detail Browser</h3>
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body" style="height: 300px">
+                  <div class="chart" style="color:#00090e;">
+                    <label for="" style="font-size: 20px;padding-left:22px;">Total:<span id="totalBrowser"></span>
+                      browser</label>
+                    <ol style="font-size:15px; font-weight: 300">
+                      <li>Chrome: <span id="totalChrome"></span> unit </li>
+                      <li>IE:<span id="totalIE"></span> unit </li>
+                      <li>Opera: <span id="totalOpera"></span> unit </li>
+                      <li>Firefox:<span id="totalFire"></span> unit </li>
+                      <li>Safari:<span id="totalSafa"></span> unit</li>
+                      <li>CocCoc:<span id="totalCoc"></span> unit</li>
+                      <li>Facebook:<span id="totalFb"></span> unit </li>
+                      <li>Other:<span id="totalOth"></span> unit</li>
+                    </ol>
+                  </div>
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+            </div>
+            <!-- end detail browser -->
+
+            <!-- Device -->
+            <div class="col-md-6">
+              <!-- AREA CHART -->
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Device</h3>
+
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body device ">
+                  <div id="device" style="height: 250px;"></div>
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+            </div>
+            <!-- end Device -->
+
+            <!-- Detail Device -->
+            <div class="col-md-6">
+              <!-- AREA CHART -->
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Detail Device</h3>
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body" style="height: 270px">
+                  <div class="chart" style="color:#00090e;">
+                    <label for="" style="font-size: 20px;padding-left:22px;">Total:<span id="totalDevice"></span>
+                      device</label>
+                    <ol style="font-size:15px; font-weight: 300">
+                      <li>Desktop: <span id="totalDes"></span> device </li>
+                      <li>Phone:<span id="totalPhone"></span> device </li>
+                      <li>Tablet: <span id="totalTab"></span> device </li>
+                      <li>Other:<span id="totalOthDevice"></span> device </li>
+                    </ol>
+                  </div>
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+            </div>
+            <!-- end detail device -->
+
+            <!-- OS desktop -->
+            <div class="col-md-6">
+              <!-- AREA CHART -->
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">OS Desktop</h3>
+
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body osDesktop">
+                  <div id="osDesktop" style="height: 250px;"></div>
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+            </div>
+            <!--end os desktop -->
+
+
+            <!-- Detail osDesktop -->
+            <div class="col-md-6">
+              <!-- AREA CHART -->
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Detail OS Desktop</h3>
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body" style="height: 270px">
+                  <div class="chart" style="color:#00090e;">
+                    <label for="" style="font-size: 20px;padding-left:22px;">Total:<span id="totalOsDesk"></span> OS</label>
+                    <ol style="font-size:15px; font-weight: 300">
+                      <li>Windows: <span id="totalWin"></span> unit </li>
+                      <li>Mac OS:<span id="totalMac"></span> unit </li>
+                      <li>Linux: <span id="totalLinux"></span> unit </li>
+                      <li>Other:<span id="totalOthOsDesk"></span> unit </li>
+                    </ol>
+                  </div>
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+            </div>
+            <!-- end detail osdesktop -->
+
+            <!-- OS Phone & tablet -->
+            <div class="col-md-6">
+              <!-- AREA CHART -->
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">OS Phone, Tablet</h3>
+
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body osPhone">
+                  <div id="osPhone" style="height: 250px;"></div>
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+            </div>
+            <!-- end os phone & tablet -->
+
+            <!-- Detail Phone & Tablet -->
+            <div class="col-md-6">
+              <!-- AREA CHART -->
+              <div class="box box-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Detail Phone & Tablet</h3>
+                  <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div>
+                <div class="box-body" style="height: 270px">
+                  <div class="chart" style="color:#00090e;">
+                    <label for="" style="font-size: 20px;padding-left:22px;">Total:<span id="total0SPhone"></span> OS</label>
+                    <ol style="font-size:15px; font-weight: 300">
+                      <li>Android: <span id="totalAn"></span> unit </li>
+                      <li>iOs:<span id="totaliOS"></span> unit </li>
+                      <li>Other:<span id="totalOthPhone"></span> unit </li>
+                    </ol>
+                  </div>
+                </div>
+                <!-- /.box-body -->
+              </div>
+              <!-- /.box -->
+            </div>
+            <!-- end detail os phone & tablet -->
+          </div>
+          <!-- /.row -->
+
+          <!-- *************************************************************************** -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+      <div class="pull-right hidden-xs">
+        <b>Version</b> 2.4.0
+      </div>
+      <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
+      reserved.
+    </footer>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Create the tabs -->
+      <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+        <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+        <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+      </ul>
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <!-- Home tab content -->
+        <div class="tab-pane" id="control-sidebar-home-tab">
+          <h3 class="control-sidebar-heading">Recent Activity</h3>
+          <ul class="control-sidebar-menu">
+            <li>
+              <a href="javascript:void(0)">
+                <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+
+                <div class="menu-info">
+                  <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+
+                  <p>Will be 23 on April 24th</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">
+                <i class="menu-icon fa fa-user bg-yellow"></i>
+
+                <div class="menu-info">
+                  <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
+
+                  <p>New phone +1(800)555-1234</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">
+                <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
+
+                <div class="menu-info">
+                  <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
+
+                  <p>nora@example.com</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">
+                <i class="menu-icon fa fa-file-code-o bg-green"></i>
+
+                <div class="menu-info">
+                  <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
+
+                  <p>Execution time 5 seconds</p>
+                </div>
+              </a>
+            </li>
+          </ul>
+          <!-- /.control-sidebar-menu -->
+
+          <h3 class="control-sidebar-heading">Tasks Progress</h3>
+          <ul class="control-sidebar-menu">
+            <li>
+              <a href="javascript:void(0)">
+                <h4 class="control-sidebar-subheading">
+                  Custom Template Design
+                  <span class="label label-danger pull-right">70%</span>
+                </h4>
+
+                <div class="progress progress-xxs">
+                  <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">
+                <h4 class="control-sidebar-subheading">
+                  Update Resume
+                  <span class="label label-success pull-right">95%</span>
+                </h4>
+
+                <div class="progress progress-xxs">
+                  <div class="progress-bar progress-bar-success" style="width: 95%"></div>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">
+                <h4 class="control-sidebar-subheading">
+                  Laravel Integration
+                  <span class="label label-warning pull-right">50%</span>
+                </h4>
+
+                <div class="progress progress-xxs">
+                  <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
+                </div>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">
+                <h4 class="control-sidebar-subheading">
+                  Back End Framework
+                  <span class="label label-primary pull-right">68%</span>
+                </h4>
+
+                <div class="progress progress-xxs">
+                  <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
+                </div>
+              </a>
+            </li>
+          </ul>
+          <!-- /.control-sidebar-menu -->
+
+        </div>
+        <!-- /.tab-pane -->
+        <!-- Stats tab content -->
+        <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+        <!-- /.tab-pane -->
+        <!-- Settings tab content -->
+        <div class="tab-pane" id="control-sidebar-settings-tab">
+          <form method="post">
+            <h3 class="control-sidebar-heading">General Settings</h3>
+
+            <div class="form-group">
+              <label class="control-sidebar-subheading">
+                Report panel usage
+                <input type="checkbox" class="pull-right" checked>
+              </label>
+
+              <p>
+                Some information about this general settings option
+              </p>
+            </div>
+            <!-- /.form-group -->
+
+            <div class="form-group">
+              <label class="control-sidebar-subheading">
+                Allow mail redirect
+                <input type="checkbox" class="pull-right" checked>
+              </label>
+
+              <p>
+                Other sets of options are available
+              </p>
+            </div>
+            <!-- /.form-group -->
+
+            <div class="form-group">
+              <label class="control-sidebar-subheading">
+                Expose author name in posts
+                <input type="checkbox" class="pull-right" checked>
+              </label>
+
+              <p>
+                Allow the user to show his name in blog posts
+              </p>
+            </div>
+            <!-- /.form-group -->
+
+            <h3 class="control-sidebar-heading">Chat Settings</h3>
+
+            <div class="form-group">
+              <label class="control-sidebar-subheading">
+                Show me as online
+                <input type="checkbox" class="pull-right" checked>
+              </label>
+            </div>
+            <!-- /.form-group -->
+
+            <div class="form-group">
+              <label class="control-sidebar-subheading">
+                Turn off notifications
+                <input type="checkbox" class="pull-right">
+              </label>
+            </div>
+            <!-- /.form-group -->
+
+            <div class="form-group">
+              <label class="control-sidebar-subheading">
+                Delete chat history
+                <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
+              </label>
+            </div>
+            <!-- /.form-group -->
+          </form>
+        </div>
+        <!-- /.tab-pane -->
+      </div>
+    </aside>
+    <!-- /.control-sidebar -->
+    <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- jQuery 3 -->
+  <!-- <script src="/bower_components/jquery/dist/jquery.min.js"></script> -->
+  <!-- Bootstrap 3.3.7 -->
+  <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <!-- ChartJS -->
+
+  <!-- FastClick -->
+  <script src="/bower_components/fastclick/lib/fastclick.js"></script>
+  <!-- AdminLTE App -->
+  <script src="/dist/js/adminlte.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="/dist/js/demo.js"></script>
+  <!-- page script -->
+
+</body>
+
+</html>
